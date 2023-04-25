@@ -1,0 +1,65 @@
+Esquema de los metodos del CRUD
+
+[HTTP - METHOD] : [RUTA]
+
+[BODY]
+
+----------------------------------------------------------
+- Metodo para obtener todos los repuestos de la base de datos
+
+    [GET]: localhost:8080/api/repuestos
+
+    curl --location 'localhost:8080/api/repuestos'
+
+- Metodo para buscar los repuestos que coincidan con el nombre indicado (/:name)
+
+    [GET]: localhost:8080/api/buscar/extremo
+
+    curl --location 'localhost:8080/api/buscar/extremo'
+
+- Metodo para buscar todos los repuestos de un modelo de auto especifico
+
+    [GET]: localhost:8080/api/buscarPorAuto/R11
+
+    curl --location 'localhost:8080/api/buscarPorAuto/R11'
+
+- Metodo para agregar un repuesto a la base de datos
+
+    [POST]: localhost:8080/api/addRepuesto
+
+    curl --location 'localhost:8080/api/addRepuesto' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "extremo",
+    "lado": "derecho",
+    "auto": "LOGAN",
+    "tipo": "original",
+    "precio": 100000
+}'
+
+- Metodo para actualizar un repuesto existente en la base de datos
+
+    [UPDATE]: localhost:8080/api/updateRepuesto/extremo
+
+    curl --location --request PUT 'localhost:8080/api/updateRepuesto/extremo' \
+--header 'Content-Type: application/json' \
+--data '  {
+        "name": "extremo",
+        "lado": "izquierdo",
+        "auto": "LOGAN",
+        "tipo": "alternativo",
+        "precio": 190000
+    }'
+
+- Metodo para eliminar un repuesto existente en la base de datos
+
+    [DELETE]: localhost:8080/api/deleteRepuesto/extremo
+
+    curl --location --request DELETE 'localhost:8080/api/deleteRepuesto/extremo' \
+--header 'Content-Type: application/json' \
+--data '{
+    "id": 3,
+    "name": "aceite",
+    "auto": "R18",
+    "tipo": "original"
+}'
