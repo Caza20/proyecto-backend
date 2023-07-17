@@ -24,7 +24,7 @@ const updateRepuestoService =  async (req) =>{
 
         // obtenemos el valor del dolar desde api externa
         const dolarData  = await axios.get('https://criptoya.com/api/dolar')
-        if (!dolarData) return { message: "No se encontró valor de dolar"}
+        if (!dolarData) return { message: "No se encontró valor de dolar",statusCode: 424}
         const dolarBlue = dolarData.data.blue; 
         //console.log(dolarBlue)
 
@@ -33,7 +33,7 @@ const updateRepuestoService =  async (req) =>{
 
         // guardamos el producto actualizado en la base de datos y retornamos un mensaje
         await updateBaseDeDatos.save();
-        return{message: "Repuesto actualizado con exito", statusCode: 200}
+        return{message: "Repuesto actualizado con exito", statusCode: 201}
     } catch(error){
         // Si durante la consulta ocurrio un error, lo retornamos
         return({message: "Ocurrio un error", statusCode: 400, error});

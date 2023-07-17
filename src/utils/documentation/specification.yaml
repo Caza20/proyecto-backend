@@ -1,0 +1,305 @@
+paths:
+  /repuestos:
+    get:
+      tags:
+        - Todos los repuestos
+      description: Consultar todos los repuestos cargados en la base de datos.
+      responses:
+        200:   
+          description: OK
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/responseGet'
+        204:
+          description: "La base de datos esta vacia, no hay repuestos cargados"
+          content:  
+            application/json:
+              schema:
+                $ref: '#/components/schemas/baseDeDatosVacia'
+        424: 
+          description: "No se encontró valor de dolar"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/noHayValorDolar'
+        400: 
+          description: "Ocurrio un error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ocurrioError'
+
+  /buscar/{name}:
+    get:
+      tags:
+        - buscar respuesto nombre
+      description: Se obtienen todos los repuestos segun el nombre ingresado por el usuario
+      parameters:
+        - $ref: '#/components/parameters/name'
+      responses:
+        200:
+          description: OK
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/responseGet'
+        404: 
+          description: "Repuesto no encontrado"
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/repuestoNoEncontrado'
+        424: 
+          description: "No se encontró valor de dolar"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/noHayValorDolar'
+        400: 
+          description: "Ocurrio un error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ocurrioError'
+
+  /buscarPorAuto/{auto}:
+    get:
+      tags:
+        - buscar auto
+      description:  Se obtienen todos los repuestos segun el modelo del auto consultado por el usuario
+      parameters:
+        - $ref: '#/components/parameters/auto'
+      responses:
+        200:
+          description: OK
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/responseGet'
+        404:
+          description: Modelo de auto incorrecto o no hay repuestos cargados para ese modelo en la base de datos
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/autoIncorrecto'
+        424: 
+          description: "No se encontró valor de dolar"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/noHayValorDolar'
+        400: 
+          description: "Ocurrio un error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ocurrioError'
+
+  /addRepuesto:
+    post:
+      tags: 
+        - api crear nuevo repuesto
+      description: Se agrega un repuesto nuevo a la base de datos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requestPost'
+      responses:
+        201:
+          description: "Repuesto agregado con exito"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/repuestoAgregado'
+        424: 
+          description: "No se encontró valor de dolar"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/noHayValorDolar'
+        409:
+          description: "Repuesto existente"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/repuestoExistente'
+        400: 
+          description: "Ocurrio un error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ocurrioError'  
+
+  /updateRepuesto/{name}:
+    put:
+      tags:
+        - actualizar repuesto
+      description: Se actualiza un repuesto existente en la base de datos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requestPost'
+      parameters:
+        - $ref: '#/components/parameters/name'
+      responses:
+        201: 
+          description: Repuesto actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/repuestoActualizado'
+        424: 
+          description: "No se encontró valor de dolar"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/noHayValorDolar'
+        404:
+          description: "Repuesto no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/repuestoNoEncontrado'
+        400: 
+          description: "Ocurrio un error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ocurrioError' 
+        
+  /deleteRepuesto/{name}:
+    delete:
+      tags:
+        - eliminar repuesto
+      description: Se borra un repuesto existente de la base de datos
+      parameters:
+        - $ref: '#/components/parameters/name'
+      responses:
+        200:
+          description: "Repuesto borrado con exito"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/repuestoBorrado'
+        404:
+          description: "Repuesto no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/repuestoNoEncontrado'
+        400: 
+          description: "Ocurrio un error"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ocurrioError' 
+      
+
+        
+
+
+
+components:
+  schemas:
+     responseGet:
+      properties:
+        name:
+          type: string
+        lado: 
+          type: string
+        auto:
+          type: string
+        tipo: 
+          type: string
+        precio:
+          type: number
+
+     requestPost:
+      properties:
+        name:
+          type: string
+        lado: 
+          type: string
+        auto:
+          type: string
+        tipo: 
+          type: string
+        precio:
+          type: number
+
+     baseDeDatosVacia: 
+      properties:
+        message:
+          type: string
+          example: "La base de datos esta vacia, no hay repuestos cargados"
+
+     noHayValorDolar: 
+      properties:
+        message:
+          type: string
+          example: "No se encontró valor de dolar"
+
+     ocurrioError: 
+      properties:
+        message:
+          type: string
+          example: "Ocurrio un error"
+    
+     repuestoNoEncontrado: 
+      properties:
+        message:
+          type: string
+          example: "Repuesto no encontrado"
+
+     autoIncorrecto: 
+      properties:
+        message:
+          type: string
+          example: "Modelo de auto incorrecto o no hay repuestos cargados para ese modelo en la base de datos"
+      
+     repuestoAgregado: 
+      properties:
+        message:
+          type: string
+          example: "Repuesto agregado con exito. Precio del repuesto convertido a valor de dolar: $(valor del dolar en el momento)"
+
+     repuestoExistente: 
+      properties:
+        message:
+          type: string
+          example: "Ya existe un repuesto con esos datos"
+
+     repuestoActualizado: 
+      properties:
+        message:
+          type: string
+          example: "Repuesto actualizado con exito"
+
+     repuestoBorrado: 
+      properties:
+        message:
+          type: string
+          example: "Repuesto borrado con exito"
+
+  parameters:
+    name:
+      name: name
+      in: path
+      description: nombre del articulo que se quiere buscar
+      required: true
+      schema:
+        type: string
+
+    auto:
+      name: auto
+      in: path
+      description: nombre del modelo del auto que se quiere buscar
+      required: true
+      schema:
+        type: string
+
+
+        

@@ -14,7 +14,7 @@ const allRepuestosService = async () => {
 
         // consultamos el valor del dolar a la api externa
         const dolarData  = await axios.get('https://criptoya.com/api/dolar')
-        if (!dolarData) return { message: "No se encontró valor de dolar"}
+        if (!dolarData) return { message: "No se encontró valor de dolar", statusCode:424}
         const dolarBlue = dolarData.data.blue; 
         // Consologueamos el valor para ver si esta bien
         //console.log(dolar.blue)

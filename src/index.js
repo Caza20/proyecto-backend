@@ -10,5 +10,6 @@ const PORT = process.env.PORT || 5000;
 // levantamos el servidor
 server.listen(PORT, () => {
     console.log(`Servidor escuchando en puerto ${PORT}`);
+    console.log(`Documentacion de API: http://localhost:${PORT}/api/documentation/swagger`);
 })
 

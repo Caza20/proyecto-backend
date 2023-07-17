@@ -18,7 +18,7 @@ const buscarPorAutoService = async (req) => {
 
         // obtenemos el valor del dolar desde una api externa
         const dolarData  = await axios.get('https://criptoya.com/api/dolar')
-        if (!dolarData) return { message: "No se encontró valor de dolar"}
+        if (!dolarData) return { message: "No se encontró valor de dolar", statusCode: 424}
         const dolarBlue = dolarData.data.blue; 
         
         // agregamos el valor del producto en ARS
